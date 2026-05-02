@@ -1,0 +1,30 @@
+"""Various constants necessary for tag parsing."""
+
+# Regular tags lookup table
+TAG_NAMES = {
+    0x0001: "Latitude Ref",
+    0x0002: "Latitude",
+    0x0003: "Longtitude Ref",
+    0x0004: "Longtitude",
+    0x0005: "Altitude Ref",
+    0x0006: "Altitude",
+    0x0007: "Timestamp",
+    0x001D: "Date Stamp",
+    0x0100: "Width",
+    0x0101: "Height",
+    0x0103: "Compression",
+    0x010E: "Description",
+    0x010F: "Make",
+    0x0110: "Model",
+    0x0112: "Orientation",
+    0x011A: "XResolution",
+    0x011B: "YResolution",
+    0x0128: "Resolution Unit",
+    0x0131: "Software",
+    0x0132: "Date Time",
+    0x0201: "Thumbnail Offset",
+    0x0202: "Thumbnail Length",
+    0x0213: "YCbCr Positioning",
+    0x8769: "Exif IFD Pointer",
+    0x8825: "GPS Info",
+}

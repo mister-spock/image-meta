@@ -1,0 +1,30 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+			"folder_exclude_patterns": ["__pycache__"]
+		}
+	],
+	"build_systems": [
+		{
+			"name": "Run Project",
+			"cmd": [
+				"$project_path/.venv/bin/python",
+				"$project_path/main.py",
+				"$project_path/cat_photo.jpg"
+			]
+		}
+	],
+	"settings": {
+		"LSP": {
+			"LSP-ruff": {
+				"settings": {
+					// Don't display Quick Fix actions to autofix violations
+			        "settings.codeAction.fixViolation.enable": false,
+			        "settings.codeAction.disableRuleComment.enable": false
+				}
+			}
+		}
+	}
+}
