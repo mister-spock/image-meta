@@ -1,4 +1,4 @@
-import sys
+import argparse
 from pathlib import Path
 
 from exif import extract_idfs_data
@@ -10,16 +10,17 @@ JPEG_EXIF = 0xFFE1 # APP1 segment is mandatory and (usually) comes right after S
 
 IFD_ENTRY_LEN = 12 # Bytes
 
-argv = sys.argv
+# Initialize argument parser
+parser = argparse.ArgumentParser(
+    prog="main",
+    description="Shows certain EXIF/TIFF data for given JPEG images"
+)
 
-# Check that we have sufficient CLI arguments
-if len(argv) < 2:
-    print("You must specify file name(s) after the program name.")
-    print("If more than one file, names must be separated by space.")
-    sys.exit(1)
+parser.add_argument("filenames", nargs="+")
+# END: Initialize argument parser
 
-# Assume arguments are all file paths
-paths = [Path(p) for p in argv[1:]]
+args = parser.parse_args()
+paths = [Path(p) for p in args.filenames]
 
 def parse_jpeg_exif(content: bytes) -> bytes:
     """Parses raw APP1 sergment from the raw bytes of a JPEG image."""
