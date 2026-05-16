@@ -3,17 +3,16 @@ from pathlib import Path
 
 from exif import extract_idfs_data
 
-SUFFIXES = ["jpg", "jpeg"] # TODO: Add more
+SUFFIXES = ["jpg", "jpeg"]  # TODO: Add more
 JPEG_SOI = 0xFFD8
 JPEG_COM = 0xFFFE
-JPEG_EXIF = 0xFFE1 # APP1 segment is mandatory and (usually) comes right after SOI
+JPEG_EXIF = 0xFFE1  # APP1 segment is mandatory and (usually) comes right after SOI
 
-IFD_ENTRY_LEN = 12 # Bytes
+IFD_ENTRY_LEN = 12  # Bytes
 
 # Initialize argument parser
 parser = argparse.ArgumentParser(
-    prog="main",
-    description="Shows certain EXIF/TIFF data for given JPEG images"
+    prog="main", description="Shows certain EXIF/TIFF data for given JPEG images"
 )
 
 parser.add_argument("filenames", nargs="+")
@@ -21,6 +20,7 @@ parser.add_argument("filenames", nargs="+")
 
 args = parser.parse_args()
 paths = [Path(p) for p in args.filenames]
+
 
 def parse_jpeg_exif(content: bytes) -> bytes:
     """Parses raw APP1 sergment from the raw bytes of a JPEG image."""
@@ -33,12 +33,12 @@ def parse_jpeg_exif(content: bytes) -> bytes:
     exif_raw = b""
 
     while offset < content_len:
-        twobytes = int.from_bytes(content[offset:offset+2])
+        twobytes = int.from_bytes(content[offset : offset + 2])
         if twobytes == JPEG_EXIF:
-            offset += 2 # Move to length pair
-            seg_len = int.from_bytes(content[offset:offset+2])
+            offset += 2  # Move to length pair
+            seg_len = int.from_bytes(content[offset : offset + 2])
             if seg_len > 0:
-                exif_raw = content[offset+2:seg_len-2]
+                exif_raw = content[offset + 2 : seg_len - 2]
             break
         else:
             offset += 1
@@ -52,13 +52,10 @@ for p in paths:
         print(f"'{p.suffix}' file formats are not supported")
         continue
 
-    apps = {}
-    app_segment = 0
-
     try:
         data = p.read_bytes()
         exif = parse_jpeg_exif(data)
-        print(f"File '{p.name}' has EXIF segment of {(len(exif)/1024):0.2f} KB")
+        print(f"File '{p.name}' has EXIF segment of {(len(exif) / 1024):0.2f} KB")
 
         idfs = extract_idfs_data(exif)
 
